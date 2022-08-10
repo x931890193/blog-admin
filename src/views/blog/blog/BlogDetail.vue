@@ -5,8 +5,7 @@
         <el-button :loading="loading" style="margin-left: 10px;" icon="el-icon-check" type="success" plain
                    @click="submitBlog">发布
         </el-button>
-        <el-button :loading="loading" icon="el-icon-message" type="warning" plain
-                   @click="draftBlog">保存草稿
+        <el-button :loading="loading" v-show="0" icon="el-icon-message" type="warning" plain @click="draftBlog">保存草稿
         </el-button>
       </sticky>
 
@@ -189,8 +188,8 @@
         });
       }
       if (fetch && this.isEdit) {
-        const id = this.$route.params && this.$route.params.id;
-        this.fetchData(id);
+        const id = this.$route.params && this.$route.params.pathMatch;
+        await this.fetchData(id);
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
@@ -245,17 +244,8 @@
       async getCategory() {
         const res = await list('/article/category')
         this.categoryOptions = res.rows
-        return
-        listCategory().then(response => {
-            if (response.code === 200) {
-              this.categoryOptions = response.rows;
-            } else {
-              this.msgError(response.msg);
-            }
-          }
-        );
       },
-      fetchData(id) {
+      async fetchData(id) {
         getBlog(id).then(response => {
           if (response.code !== 200) {
             this.msgError(response.msg);
@@ -275,26 +265,18 @@
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id === undefined) {
               addBlog(obj).then(response => {
-                if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route);
                   this.$router.push({path: '/article/index'})
-                } else {
-                  this.msgError(response.msg);
-                }
                 this.loading = false;
               }).catch(error => {
                 this.loading = false;
               });
             } else {
               updateBlog(obj).then(response => {
-                if (response.code === 200) {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route);
                   this.$router.push({path: '/article/index'})
-                } else {
-                  this.msgError(response.msg);
-                }
                 this.loading = false;
               }).catch(error => {
                 this.loading = false;

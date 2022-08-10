@@ -742,6 +742,142 @@
               }
             }
           }
+        },
+        "AdminArticleAddRequest": {
+          "fields": {
+            "title": {
+              "type": "string",
+              "id": 1
+            },
+            "summary": {
+              "type": "string",
+              "id": 2
+            },
+            "categoryId": {
+              "type": "uint32",
+              "id": 3
+            },
+            "support": {
+              "type": "bool",
+              "id": 4
+            },
+            "comment": {
+              "type": "bool",
+              "id": 5
+            },
+            "headerImgType": {
+              "type": "uint32",
+              "id": 6
+            },
+            "headerImg": {
+              "type": "string",
+              "id": 7
+            },
+            "weight": {
+              "type": "uint32",
+              "id": 8
+            },
+            "tagTitleList": {
+              "rule": "repeated",
+              "type": "string",
+              "id": 9
+            },
+            "content": {
+              "type": "string",
+              "id": 10
+            }
+          }
+        },
+        "AdminArticleAddResp": {
+          "fields": {
+            "code": {
+              "type": "uint32",
+              "id": 1
+            },
+            "msg": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "AdminArticleListResp": {
+          "fields": {
+            "code": {
+              "type": "uint32",
+              "id": 1
+            },
+            "msg": {
+              "type": "string",
+              "id": 2
+            },
+            "total": {
+              "type": "uint32",
+              "id": 3
+            },
+            "rows": {
+              "rule": "repeated",
+              "type": "adminArticleListBase",
+              "id": 4
+            }
+          },
+          "nested": {
+            "adminArticleListCategory": {
+              "fields": {
+                "title": {
+                  "type": "string",
+                  "id": 1
+                },
+                "description": {
+                  "type": "string",
+                  "id": 2
+                }
+              }
+            },
+            "adminArticleListBase": {
+              "fields": {
+                "title": {
+                  "type": "string",
+                  "id": 1
+                },
+                "summary": {
+                  "type": "string",
+                  "id": 2
+                },
+                "headerImg": {
+                  "type": "string",
+                  "id": 3
+                },
+                "comment": {
+                  "type": "bool",
+                  "id": 4
+                },
+                "weight": {
+                  "type": "uint32",
+                  "id": 5
+                },
+                "support": {
+                  "type": "bool",
+                  "id": 6
+                },
+                "createTime": {
+                  "type": "string",
+                  "id": 7
+                },
+                "id": {
+                  "type": "uint32",
+                  "id": 8
+                },
+                "status": {
+                  "type": "bool",
+                  "id": 9
+                },
+                "category": {
+                  "type": "adminArticleListCategory",
+                  "id": 10
+                }
+              }
+            }
+          }
         }
       }
     }

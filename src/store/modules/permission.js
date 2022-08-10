@@ -29,14 +29,14 @@ const permission = {
 };
 
 // 遍历后台传来的路由字符串，转换为组件对象
-function filterAsyncRouter(asyncRouterList, resolve) {
+function filterAsyncRouter(asyncRouterList) {
   return asyncRouterList.filter(route => {
     if (route.component) {
       // Layout组件特殊处理
       if (route.component === 'Layout') {
         route.component = Layout
       } else {
-        route.component = loadView(route.component, resolve)
+        route.component = loadView(route.component)
       }
     }
     if (route.children != null && route.children && route.children.length) {
@@ -46,7 +46,7 @@ function filterAsyncRouter(asyncRouterList, resolve) {
   })
 }
 
-export const loadView = (view, resolve) => { // 路由懒加载
+export const loadView = (view) => { // 路由懒加载
   return (resolve) => require(['@/views/' + view], resolve)
 };
 

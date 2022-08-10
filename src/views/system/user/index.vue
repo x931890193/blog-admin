@@ -323,7 +323,7 @@
       submitForm: function () {
         this.$refs["form"].validate(valid => {
           if (valid) {
-            if (this.form.id != undefined) {
+            if (this.form.id !== undefined) {
               updateUser(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess("修改成功");

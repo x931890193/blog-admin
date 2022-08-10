@@ -1,4 +1,7 @@
 import request from '@/utils/request'
+import protoRoot from "@/proto/proto";
+import { Message as Message } from 'element-ui'
+
 
 // 查询博客列表
 export function listBlog(query) {
@@ -12,18 +15,45 @@ export function listBlog(query) {
 // 查询博客详细
 export function getBlog(id) {
   return request({
-    url: '/article/' + id,
+    url: '/article?' + id,
     method: 'get'
   })
 }
 
 // 新增博客配置
-export function addBlog(data) {
-  return request({
-    url: '/blog/blog',
+export async function addBlog(form) {
+  const AdminArticleAddRequest = protoRoot.lookupType('AdminArticleAddRequest')
+  const AdminArticleAddRequestMessage = AdminArticleAddRequest.encode(
+    AdminArticleAddRequest.create({
+      title: form.title,
+      summary: form.summary,
+      categoryId: form.categoryId,
+      support: form.support,
+      comment: form.comment,
+      headerImgType: form.headerImgType,
+      headerImg: form.headerImg,
+      weight: form.weight,
+      tagTitleList: form.tagTitleList,
+      content: form.content
+    })
+  ).finish()
+  const blob = new Blob([AdminArticleAddRequestMessage], { type: 'buffer' })
+  const buf = await request({
+    url: '/article/add',
     method: 'post',
-    data: data
+    data: blob
   })
+  const AdminArticleAddResp = protoRoot.lookupType('AdminArticleAddResp')
+  const res = AdminArticleAddResp.decode(buf)
+  if (res.code !== 0) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 // 修改博客配置

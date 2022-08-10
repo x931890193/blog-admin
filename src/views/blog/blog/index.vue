@@ -98,8 +98,7 @@
       </el-table-column>
       <el-table-column label="允许评论">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.comment"
-                     @change="handleCommentChange(scope.row)"/>
+          <el-switch v-model="scope.row.comment" @change="handleCommentChange(scope.row)"/>
         </template>
       </el-table-column>
       <el-table-column label="推荐">
@@ -110,7 +109,7 @@
       </el-table-column>
       <el-table-column label="状态">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.status ==true">发布</el-tag>
+          <el-tag v-if="scope.row.status === true">已发布</el-tag>
           <el-tag v-else type="warning">草稿</el-tag>
         </template>
       </el-table-column>
@@ -128,7 +127,7 @@
       <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" size="mini" icon="el-icon-edit">
-            <router-link :to="'blog/edit/'+scope.row.id">编辑</router-link>
+            <router-link :to="'edit/' + scope.row.id">编辑</router-link>
           </el-button>
           <el-popover :ref="scope.row.id" placement="top" width="180">
             <p>确定删除本条数据吗？</p>
@@ -196,7 +195,7 @@
     },
     methods: {
       beforeInit() {
-        this.base = '/article/list';
+        this.base = '/article';
         this.modelName = '博客';
         return true
       },
