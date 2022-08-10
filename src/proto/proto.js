@@ -635,6 +635,118 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             id: 3
           }
         }
+      },
+      AdminCategoryAddRequest: {
+        fields: {
+          title: {
+            type: "string",
+            id: 1
+          },
+          description: {
+            type: "string",
+            id: 2
+          },
+          support: {
+            type: "bool",
+            id: 3
+          }
+        }
+      },
+      AdminCategoryAddResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          }
+        }
+      },
+      AdminCategoryListResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          },
+          total: {
+            type: "uint32",
+            id: 3
+          },
+          rows: {
+            rule: "repeated",
+            type: "categoryBase",
+            id: 4
+          }
+        },
+        nested: {
+          blogBase: {
+            fields: {
+              title: {
+                type: "string",
+                id: 1
+              },
+              summary: {
+                type: "string",
+                id: 2
+              },
+              headerImg: {
+                type: "string",
+                id: 3
+              },
+              comment: {
+                type: "string",
+                id: 4
+              },
+              weight: {
+                type: "uint32",
+                id: 5
+              },
+              support: {
+                type: "bool",
+                id: 6
+              },
+              createTime: {
+                type: "string",
+                id: 7
+              }
+            }
+          },
+          categoryBase: {
+            fields: {
+              title: {
+                type: "string",
+                id: 1
+              },
+              description: {
+                type: "string",
+                id: 2
+              },
+              createTime: {
+                type: "string",
+                id: 3
+              },
+              support: {
+                type: "bool",
+                id: 4
+              },
+              blogList: {
+                rule: "repeated",
+                type: "blogBase",
+                id: 5
+              },
+              id: {
+                type: "uint32",
+                id: 6
+              }
+            }
+          }
+        }
       }
     }
   }

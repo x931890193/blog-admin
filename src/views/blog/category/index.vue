@@ -121,9 +121,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-      @pagination="init"/>
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"  @pagination="init"/>
 
     <!-- 添加或修改分类对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
@@ -139,7 +137,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="add">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -149,6 +147,7 @@
 <script>
   import {
     getCategory,
+    addCategory,
     changeCategorySupport,
   } from "@/api/blog/category";
   import initData from '@/mixins/initData'
@@ -164,7 +163,7 @@
           support: undefined
         },
         // 表单参数
-        form: {support: false},
+        form: {support: true},
         // 表单校验
         rules: {
           title: [
@@ -185,7 +184,7 @@
     },
     methods: {
       beforeInit() {
-        this.base = '/blog/category';
+        this.base = '/article/category';
         this.modelName = '分类';
         return true
       },
@@ -198,15 +197,29 @@
         }).then(function () {
           return changeCategorySupport(row.id, row.support);
         }).then((response) => {
-          if (response.code == 200) {
+          if (response.code === 200) {
             this.msgSuccess(text + "成功");
           } else {
             this.msgError(text + "失败");
           }
         }).catch(function () {
-          row.support = row.support ? false : true;
+          row.support = !row.support;
         });
       },
+      async add() {
+        await this.$refs["form"].validate(valid => {
+          if (valid) {
+            addCategory(this.form).then(resp => {
+              this.msgSuccess("添加成功～")
+              this.open = false;
+              this.init();
+            }).catch(err => {
+              //
+            })
+          }
+        });
+
+      }
     }
   };
 </script>

@@ -151,7 +151,7 @@
 </template>
 
 <script>
-  import {listBlog, delBlog, changeBlogSupport, changeBlogComment} from "@/api/blog/blog";
+  import {changeBlogSupport, changeBlogComment} from "@/api/blog/blog";
   import initData from '@/mixins/initData'
 
   export default {
@@ -196,7 +196,7 @@
     },
     methods: {
       beforeInit() {
-        this.base = '/article/index';
+        this.base = '/article/list';
         this.modelName = '博客';
         return true
       },
@@ -210,13 +210,13 @@
         }).then(function () {
           return changeBlogComment(row.id, row.comment);
         }).then((response) => {
-          if (response.code == 200) {
+          if (response.code === 200) {
             this.msgSuccess(text + "成功");
           } else {
             this.msgError(text + "失败");
           }
         }).catch(function () {
-          row.comment = row.comment ? false : true;
+          row.comment = !row.comment;
           this.msgError(text + "失败");
         });
       },
@@ -229,13 +229,13 @@
         }).then(function () {
           return changeBlogSupport(row.id, row.support);
         }).then((response) => {
-          if (response.code == 200) {
+          if (response.code === 200) {
             this.msgSuccess(text + "成功");
           } else {
             this.msgError(text + "失败");
           }
         }).catch(function () {
-          row.support = row.support === false ? true : false;
+          row.support = row.support === false;
         });
       }
     }

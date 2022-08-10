@@ -1,12 +1,45 @@
 import request from '@/utils/request'
 
+import protoRoot from "@/proto/proto";
+import { Message as Message } from 'element-ui'
+
 //通用的获取表格数据
-export function list(url, params) {
-  return request({
-    url: url + "/list",
-    method: 'get',
-    params: params
-  })
+export async function list(url, params) {
+  switch (url) {
+    case "/article/list": {
+      break
+    }
+    case "/article/category": {
+      const AdminCategoryListResp = protoRoot.lookupType('AdminCategoryListResp')
+      const buf = await request({
+        url: url + "/list",
+        method: 'get',
+        params: params
+      })
+      const res = AdminCategoryListResp.decode(buf)
+      if (res.code !== 0) {
+        Message({
+          message: res.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return Promise.reject(new Error(res.msg || 'Error'))
+      }
+      return res
+    }
+    case "/article/comments/list": {
+      return
+    }
+    case "/article/tags": {
+      return
+    }
+    case "'/log/loginLog/list": {
+      return
+    }
+    case '/log/operateLog/list': {
+      return
+    }
+  }
 }
 
 //通用的表格数据删除

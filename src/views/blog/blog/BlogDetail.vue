@@ -118,6 +118,7 @@
   import ImagePicker from '@/components/ImagePicker'
   import MyLocalStorage from "../../../utils/MyLocalStorage";
   import {uploadImgToQiNiu} from "@/api/common"
+  import {list} from "@/api/initDataApi";
 
   export default {
     name: 'BlogDetail',
@@ -169,10 +170,10 @@
         }
       }
     },
-    created() {
-      var blogCache = MyLocalStorage.Cache.get("blogCache");
-      var fetch = true;
-      if (blogCache != undefined && blogCache.content != undefined && blogCache.content.length != 0) {
+    async created() {
+      const blogCache = MyLocalStorage.Cache.get("blogCache");
+      let fetch = true;
+      if (blogCache !== undefined && blogCache.content !== undefined && blogCache.content.length !== 0) {
         this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
           cancelButtonText: '删除本地记录',
@@ -241,7 +242,10 @@
         }
       },
       //获取文章分类
-      getCategory() {
+      async getCategory() {
+        const res = await list('/article/category')
+        this.categoryOptions = res.rows
+        return
         listCategory().then(response => {
             if (response.code === 200) {
               this.categoryOptions = response.rows;

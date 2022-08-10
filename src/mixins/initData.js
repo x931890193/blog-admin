@@ -54,8 +54,13 @@ export default {
       return new Promise((resolve, reject) => {
         this.loading = true;
         list(this.base, this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.total = response.total;
-          this.list = response.rows;
+          const total = response.total
+          const rows = response.rows
+          if (total === undefined || rows === undefined) {
+          } else {
+            this.total = total;
+            this.list = rows;
+          }
           setTimeout(() => {
             this.loading = false
           }, this.time);
@@ -82,7 +87,7 @@ export default {
     handleSelectionChange(selection) {
       this.row = selection[0];
       this.ids = selection.map(item => item.id);
-      this.single = selection.length != 1;
+      this.single = selection.length !== 1;
       this.multiple = !selection.length
     },
     /** 单条删除 */
@@ -91,7 +96,7 @@ export default {
       return new Promise((resolve, reject) => {
         del(this.base, id).then(response => {
           this.delLoading = false;
-          if (response.code == 200) {
+          if (response.code === 200) {
             this.$refs[id].doClose();
             this.init();
             this.msgSuccess("删除成功");
@@ -112,15 +117,15 @@ export default {
       this.form = this.formReset;
       this.open = true;
     },
-    /** 提交按钮 */
+    /** 提交按钮（弃用） */
     submitForm: function (refName) {
-      if (this.$refs[refName] == undefined) {
+      if (this.$refs[refName] === undefined) {
         refName = 'form';
       }
       let obj = JSON.parse(JSON.stringify(this.form));
       this.$refs[refName].validate(valid => {
         if (valid) {
-          if (this.form.id != undefined) {
+          if (this.form.id !== undefined) {
             update(this.base, obj).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
@@ -178,7 +183,7 @@ export default {
       }).then(function () {
         del($this.base, $this.ids).then(response => {
           $this.delLoading = false;
-          if (response.code == 200) {
+          if (response.code === 200) {
             $this.init();
             $this.msgSuccess("删除成功");
           } else {
@@ -202,7 +207,7 @@ export default {
       }).then(function () {
         clean($this.base).then(response => {
           $this.delLoading = false;
-          if (response.code == 200) {
+          if (response.code === 200) {
             $this.init();
             $this.msgSuccess("清空成功");
           } else {

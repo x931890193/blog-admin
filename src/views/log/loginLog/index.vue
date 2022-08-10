@@ -88,7 +88,6 @@
 </template>
 
 <script>
-  import {list} from "@/api/log/loginLog";
   import initData from '@/mixins/initData'
 
   export default {

@@ -47,7 +47,7 @@ module.exports = {
   /**
    * 备案号
    */
-  caseNumber: '蜀ICP备2021019933号-1',
+  caseNumber: '渝ICP备18016573号-1',
   /**
    * 底部文字，支持html语法
    */

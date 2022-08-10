@@ -59,7 +59,7 @@
         }
         this.loading = true;
         listQiNiuImage(this.queryParams).then(response => {
-          if (this.imageList.length == response.total) {
+          if (this.imageList.length === response.total) {
             this.noMore = true;
           }
           this.imageList.push(...response.rows);

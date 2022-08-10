@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询博客列表
 export function listBlog(query) {
   return request({
-    url: '/blog/blog/list',
+    url: '/article/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listBlog(query) {
 // 查询博客详细
 export function getBlog(id) {
   return request({
-    url: '/blog/blog/' + id,
+    url: '/article/' + id,
     method: 'get'
   })
 }
@@ -64,7 +64,7 @@ export function changeBlogComment(id, comment) {
     comment: comment
   };
   return request({
-    url: '/blog/blog/comment',
+    url: '/article/comment',
     method: 'put',
     data: data
   })
@@ -73,7 +73,7 @@ export function changeBlogComment(id, comment) {
 //获取Blog Tag
 export function listBlogTagList(query) {
   return request({
-    url: '/blog/blog/tag/' + query,
+    url: '/article/tag' + query,
     method: 'get',
   })
 }
@@ -82,7 +82,7 @@ export function listBlogTagList(query) {
 // 新增博客草稿
 export function addBlogDraft(data) {
   return request({
-    url: '/blog/blog/draft',
+    url: '/article/draft',
     method: 'post',
     data: data
   })
@@ -91,7 +91,7 @@ export function addBlogDraft(data) {
 // 修改博客草稿
 export function updateBlogDraft(data) {
   return request({
-    url: '/blog/blog/draft',
+    url: '/article/draft',
     method: 'put',
     data: data
   })
