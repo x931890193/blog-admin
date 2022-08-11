@@ -176,6 +176,22 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           parentUsername: {
             type: "string",
             id: 8
+          },
+          ip: {
+            type: "string",
+            id: 9
+          },
+          ua: {
+            type: "string",
+            id: 10
+          },
+          location: {
+            type: "string",
+            id: 11
+          },
+          os: {
+            type: "string",
+            id: 12
           }
         }
       },
@@ -881,6 +897,63 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
                 id: 10
               }
             }
+          }
+        }
+      },
+      AdminArticleOneResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          },
+          title: {
+            type: "string",
+            id: 3
+          },
+          summary: {
+            type: "string",
+            id: 4
+          },
+          categoryId: {
+            type: "uint32",
+            id: 5
+          },
+          support: {
+            type: "bool",
+            id: 6
+          },
+          comment: {
+            type: "bool",
+            id: 7
+          },
+          headerImgType: {
+            type: "uint32",
+            id: 8
+          },
+          headerImg: {
+            type: "string",
+            id: 9
+          },
+          weight: {
+            type: "uint32",
+            id: 10
+          },
+          tagTitleList: {
+            rule: "repeated",
+            type: "string",
+            id: 11
+          },
+          content: {
+            type: "string",
+            id: 12
+          },
+          id: {
+            type: "uint32",
+            id: 13
           }
         }
       }

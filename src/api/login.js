@@ -22,7 +22,7 @@ export async function login(username, password, code, uuid) {
   })
   const LoginAdminResp = protoRoot.lookupType('LoginAdminResp')
   const res = LoginAdminResp.decode(buf)
-  if (res.code !== 0) {
+  if (res.code) {
     Message({
       message: res.msg,
       type: 'error',
@@ -41,7 +41,7 @@ export async function getInfo() {
   })
   const AdminInfoResp = protoRoot.lookupType('AdminInfoResp')
   const res = AdminInfoResp.decode(buf)
-  if (res.code !== 0) {
+  if (res.code) {
     Message({
       message: res.msg,
       type: 'error',
@@ -68,7 +68,7 @@ export async function getCodeImg() {
   })
   const CaptchaResp = protoRoot.lookupType('CaptchaResp')
   const res = CaptchaResp.decode(buf)
-  if (res.code !== 0) {
+  if (res.code) {
     Message({
       message: res.msg,
       type: 'error',

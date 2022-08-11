@@ -13,11 +13,22 @@ export function listBlog(query) {
 }
 
 // 查询博客详细
-export function getBlog(id) {
-  return request({
-    url: '/article?' + id,
+export async function getBlog(id) {
+  const buf = await request({
+    url: '/article/' + id,
     method: 'get'
   })
+  const AdminArticleOneResp = protoRoot.lookupType('AdminArticleOneResp')
+  const res = AdminArticleOneResp.decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 // 新增博客配置
@@ -45,7 +56,7 @@ export async function addBlog(form) {
   })
   const AdminArticleAddResp = protoRoot.lookupType('AdminArticleAddResp')
   const res = AdminArticleAddResp.decode(buf)
-  if (res.code !== 0) {
+  if (res.code) {
     Message({
       message: res.msg,
       type: 'error',
@@ -57,12 +68,39 @@ export async function addBlog(form) {
 }
 
 // 修改博客配置
-export function updateBlog(data) {
-  return request({
-    url: '/blog/blog',
-    method: 'put',
-    data: data
+export async function updateBlog(form) {
+  const AdminArticleAddRequest = protoRoot.lookupType('AdminArticleAddRequest')
+  const AdminArticleAddRequestMessage = AdminArticleAddRequest.encode(
+    AdminArticleAddRequest.create({
+      title: form.title,
+      summary: form.summary,
+      categoryId: form.categoryId,
+      support: form.support,
+      comment: form.comment,
+      headerImgType: form.headerImgType,
+      headerImg: form.headerImg,
+      weight: form.weight,
+      tagTitleList: form.tagTitleList,
+      content: form.content
+    })
+  ).finish()
+  const blob = new Blob([AdminArticleAddRequestMessage], { type: 'buffer' })
+  const buf = await request({
+    url: '/article/' + form.id,
+    method: 'post',
+    data: blob
   })
+  const AdminArticleAddResp = protoRoot.lookupType('AdminArticleAddResp')
+  const res = AdminArticleAddResp.decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 // 删除博客配置

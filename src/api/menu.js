@@ -10,7 +10,7 @@ export async function getRouters() {
   })
   const AdminRouterResp = protoRoot.lookupType('AdminRouterResp')
   const res = AdminRouterResp.decode(buf)
-  if (res.code !== 0) {
+  if (res.code) {
     Message({
       message: res.msg,
       type: 'error',

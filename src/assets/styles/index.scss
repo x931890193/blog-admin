@@ -156,7 +156,8 @@ aside {
   }
 
   &.publish {
-    border-bottom:1px dashed #d0d0d0
+    border-bottom:1px dashed #d0d0d0;
+    z-index: 9999 !important;
   }
 }
 
@@ -214,7 +215,7 @@ aside {
   font-family: Arial, sans-serif !important;
   position: fixed;
   bottom: 0;
-  z-index: 99;
+  z-index: 9999 !important;
   width: 100%;
   text-align: center;
 }

@@ -170,37 +170,44 @@
       }
     },
     async created() {
+      const id = this.$route.params && this.$route.params.pathMatch
       const blogCache = MyLocalStorage.Cache.get("blogCache");
-      let fetch = true;
-      if (blogCache !== undefined && blogCache.content !== undefined && blogCache.content.length !== 0) {
+      if (id !== undefined && this.isEdit) {
+        await this.fetchData(id);
+      }  else if (blogCache !== undefined && blogCache.content !== undefined && blogCache.content.length !== 0) {
         this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
           cancelButtonText: '删除本地记录',
           type: 'warning'
         }).then(() => {
           this.msgSuccess("已成功恢复!");
-          fetch = false;
           this.form = blogCache;
         }).catch(() => {
           this.msgInfo("已删除!");
+          this.initForm()
           //删除缓存
           MyLocalStorage.Cache.remove("blogCache");
         });
       }
-      if (fetch && this.isEdit) {
-        const id = this.$route.params && this.$route.params.pathMatch;
-        await this.fetchData(id);
-      }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
-      this.getCategory();
+      await this.getCategory();
       this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu";
-
       setInterval(() => {
         MyLocalStorage.Cache.put("blogCache", this.form);
       }, 10000)
     },
     methods: {
+      initForm() {
+        this.form = {
+          headerImgType: 0,
+          headerImg: '',
+          weight: 1,
+          tagTitleList: [],
+          comment: true,
+          support: false
+        }
+      },
       onImgSelect(url) {
         this.form.headerImg = url;
         if (this.form.headerImgType === 0) {
@@ -247,38 +254,38 @@
       },
       async fetchData(id) {
         getBlog(id).then(response => {
-          if (response.code !== 200) {
-            this.msgError(response.msg);
-            return;
-          }
-          this.form = response.data;
+          this.form = response;
+        }).catch(err => {
+          console.log("fetchData error", err)
         })
       },
       submitBlog() {
         this.form.htmlContent = marked(this.form.content);
-        //删除缓存
-        MyLocalStorage.Cache.remove("blogCache");
         this.$refs.form.validate(valid => {
           if (valid) {
             this.loading = true;
             this.form.status = true;
             let obj = JSON.parse(JSON.stringify(this.form));
             if (obj.id === undefined) {
-              addBlog(obj).then(response => {
+              addBlog(obj).then(() => {
                   this.msgSuccess("发布成功");
                   this.$store.dispatch('tagsView/delView', this.$route);
                   this.$router.push({path: '/article/index'})
-                this.loading = false;
+                  this.loading = false;
+                //删除缓存
+                MyLocalStorage.Cache.remove("blogCache");
               }).catch(error => {
+                console.log(error)
                 this.loading = false;
               });
             } else {
-              updateBlog(obj).then(response => {
-                  this.msgSuccess("发布成功");
+              updateBlog(obj).then(() => {
+                  this.msgSuccess("更新成功～");
                   this.$store.dispatch('tagsView/delView', this.$route);
                   this.$router.push({path: '/article/index'})
                 this.loading = false;
               }).catch(error => {
+                console.log(error)
                 this.loading = false;
               });
             }

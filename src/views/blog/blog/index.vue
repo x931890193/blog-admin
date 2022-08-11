@@ -89,11 +89,12 @@
       <el-table-column label="分类" prop="category.title"/>
       <el-table-column label="封面" prop="headerImg">
         <template slot-scope="scope">
-          <el-image
+          <el-image v-show="scope.row.headerImg"
             style="width: 30px; height: 30px"
             :src="scope.row.headerImg"
             :preview-src-list="[scope.row.headerImg]">
           </el-image>
+          无封面
         </template>
       </el-table-column>
       <el-table-column label="允许评论">

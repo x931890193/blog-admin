@@ -40,7 +40,7 @@ export async function addCategory(form) {
 
   const AdminCategoryAddResp = protoRoot.lookupType('AdminCategoryAddResp')
   const res = AdminCategoryAddResp.decode(buf)
-  if (res.code !== 0) {
+  if (res.code) {
     Message({
       message: res.msg,
       type: 'error',

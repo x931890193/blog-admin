@@ -12,7 +12,7 @@
       </el-tab-pane>
       <el-tab-pane label="Email设置" name="fourth">
         <EmailSetting/>
-      </el-tab-pane>
+      </el-tab-pane>a
     </el-tabs>
   </div>
 </template>
