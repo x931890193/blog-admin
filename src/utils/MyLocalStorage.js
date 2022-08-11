@@ -1,6 +1,5 @@
 //定时 缓存
-var MyLocalStorage ={
-  Cache : {
+const LocalStorageWithTime = {
     /**
      * 总容量5M
      * 存入缓存，支持字符串类型、json对象的存储
@@ -29,7 +28,7 @@ var MyLocalStorage ={
         var cacheVal = localStorage.getItem(key);
         var result = JSON.parse(cacheVal);
         var now = new Date()-1;
-        if(!result){return null;}//缓存不存在
+        if(!result){return undefined;}//缓存不存在
         if(now>result.exp){//缓存过期
           this.remove(key);
           return "";
@@ -37,8 +36,7 @@ var MyLocalStorage ={
         //console.log("get cache:"+key);
         return result.val;
       }catch(e){
-        this.remove(key);
-        return null;
+        return undefined;
       }
     },/**移除缓存，一般情况不手动调用，缓存过期自动调用*/
     remove : function(key){
@@ -50,6 +48,5 @@ var MyLocalStorage ={
       localStorage.clear();
     }
   }//end Cache
-};
 
-export default MyLocalStorage;
+export default LocalStorageWithTime;

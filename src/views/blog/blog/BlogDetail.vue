@@ -111,13 +111,12 @@
   import {mavonEditor} from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
   import {listBlogTagList, getBlog, addBlog, updateBlog, addBlogDraft, updateBlogDraft} from "@/api/blog/blog";
-  import {listCategory} from "@/api/blog/category";
   import {getToken} from '@/utils/auth'
   import marked from 'marked'
   import ImagePicker from '@/components/ImagePicker'
-  import MyLocalStorage from "../../../utils/MyLocalStorage";
   import {uploadImgToQiNiu} from "@/api/common"
   import {list} from "@/api/initDataApi";
+  import LocalStorageWithTime from "../../../utils/MyLocalStorage";
 
   export default {
     name: 'BlogDetail',
@@ -131,8 +130,6 @@
     data() {
       return {
         imagePickerOpen: false,
-        //上传图片的地址
-        imagesUploadApi: '',
         //上传文件需要用到的token
         headers: {'Authorization': 'Bearer ' + getToken()},
         form: {
@@ -141,7 +138,10 @@
           weight: 1,
           tagTitleList: [],
           comment: true,
-          support: false
+          support: false,
+          title: '',
+          summary: '',
+          content: '',
         },
         loading: false,
         tempRoute: {},
@@ -171,10 +171,10 @@
     },
     async created() {
       const id = this.$route.params && this.$route.params.pathMatch
-      const blogCache = MyLocalStorage.Cache.get("blogCache");
+      const blogCache = LocalStorageWithTime.get("blogCache");
       if (id !== undefined && this.isEdit) {
         await this.fetchData(id);
-      }  else if (blogCache !== undefined && blogCache.content !== undefined && blogCache.content.length !== 0) {
+      }  else if (blogCache !== undefined && blogCache.content !== undefined && blogCache.content !== '') {
         this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
           cancelButtonText: '删除本地记录',
@@ -186,16 +186,18 @@
           this.msgInfo("已删除!");
           this.initForm()
           //删除缓存
-          MyLocalStorage.Cache.remove("blogCache");
+          LocalStorageWithTime.remove("blogCache");
         });
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
       await this.getCategory();
-      this.imagesUploadApi = process.env.VUE_APP_BASE_API + "/tool/qiNiu";
       setInterval(() => {
-        MyLocalStorage.Cache.put("blogCache", this.form);
-      }, 10000)
+        if (this.form.title !== '' && this.form.content !== '') {
+          console.log("save blogCache", new Date().valueOf())
+          LocalStorageWithTime.put("blogCache", this.form);
+        }
+      }, 5000)
     },
     methods: {
       initForm() {
@@ -273,7 +275,7 @@
                   this.$router.push({path: '/article/index'})
                   this.loading = false;
                 //删除缓存
-                MyLocalStorage.Cache.remove("blogCache");
+                LocalStorageWithTime.remove("blogCache");
               }).catch(error => {
                 console.log(error)
                 this.loading = false;
@@ -302,7 +304,7 @@
           return
         }
         //删除缓存
-        MyLocalStorage.Cache.remove("blogCache");
+        LocalStorageWithTime.remove("blogCache");
         let obj = JSON.parse(JSON.stringify(this.form));
         obj.status = false;
         if (obj.id === undefined) {
