@@ -117,6 +117,7 @@
   import {uploadImgToQiNiu} from "@/api/common"
   import {list} from "@/api/initDataApi";
   import LocalStorageWithTime from "../../../utils/MyLocalStorage";
+  import Router from "vue-router";
 
   export default {
     name: 'BlogDetail',
@@ -186,16 +187,16 @@
           this.msgInfo("已删除!");
           this.initForm()
           //删除缓存
-          LocalStorageWithTime.remove("blogCache");
+          LocalStorageWithTime.remove('blogCache');
         });
       }
       this.tempRoute = Object.assign({}, this.$route);
       //设置category
       await this.getCategory();
       setInterval(() => {
-        if (this.form.title !== '' && this.form.content !== '') {
+        if (this.form.title !== '' && this.form.content !== '' && (this.$route.name === 'BlogAdd' || this.$route.name === 'BlogEdit')) {
           console.log("save blogCache", new Date().valueOf())
-          LocalStorageWithTime.put("blogCache", this.form);
+          LocalStorageWithTime.put('blogCache', this.form);
         }
       }, 5000)
     },
