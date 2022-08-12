@@ -529,6 +529,10 @@
               "rule": "repeated",
               "type": "uint32",
               "id": 14
+            },
+            "title": {
+              "type": "string",
+              "id": 15
             }
           }
         },
@@ -550,6 +554,22 @@
             "pagination": {
               "type": "Pagination",
               "id": 4
+            }
+          }
+        },
+        "ArticleOneResp": {
+          "fields": {
+            "code": {
+              "type": "uint32",
+              "id": 1
+            },
+            "msg": {
+              "type": "string",
+              "id": 2
+            },
+            "obj": {
+              "type": "Article",
+              "id": 3
             }
           }
         },
@@ -949,6 +969,120 @@
             "id": {
               "type": "uint32",
               "id": 13
+            }
+          }
+        },
+        "Tags": {
+          "fields": {
+            "_id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "name": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "ListByClassResp": {
+          "fields": {
+            "code": {
+              "type": "uint32",
+              "id": 1
+            },
+            "msg": {
+              "type": "string",
+              "id": 2
+            },
+            "classList": {
+              "rule": "repeated",
+              "type": "ClassList",
+              "id": 3
+            },
+            "articleList": {
+              "rule": "repeated",
+              "type": "ArticleList",
+              "id": 4
+            },
+            "tags": {
+              "rule": "repeated",
+              "type": "Tags",
+              "id": 5
+            }
+          },
+          "nested": {
+            "List": {
+              "fields": {
+                "_id": {
+                  "type": "uint32",
+                  "id": 1
+                },
+                "createDate": {
+                  "type": "string",
+                  "id": 2
+                },
+                "title": {
+                  "type": "string",
+                  "id": 3
+                }
+              }
+            },
+            "ClassList": {
+              "fields": {
+                "_id": {
+                  "type": "uint32",
+                  "id": 1
+                },
+                "name": {
+                  "type": "string",
+                  "id": 2
+                },
+                "count": {
+                  "type": "uint32",
+                  "id": 3
+                }
+              }
+            },
+            "ArticleList": {
+              "fields": {
+                "year": {
+                  "type": "uint32",
+                  "id": 1
+                },
+                "list": {
+                  "rule": "repeated",
+                  "type": "List",
+                  "id": 2
+                }
+              }
+            }
+          }
+        },
+        "AdminEditCategoryRequest": {
+          "fields": {
+            "id": {
+              "type": "uint32",
+              "id": 1
+            },
+            "title": {
+              "type": "string",
+              "id": 2
+            },
+            "description": {
+              "type": "string",
+              "id": 3
+            }
+          }
+        },
+        "AdminEditCategoryResp": {
+          "fields": {
+            "code": {
+              "type": "uint32",
+              "id": 1
+            },
+            "msg": {
+              "type": "string",
+              "id": 2
             }
           }
         }

@@ -46,12 +46,11 @@
       <el-table-column type="selection"/>
       <el-table-column label="分类名称" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column label="分类描述" prop="description" :show-overflow-tooltip="true"/>
-      <el-table-column label="推荐">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.support" active-color="#13ce66" inactive-color="#ff4949"
-                     @change="handleSupportChange(scope.row)"/>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="推荐">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-switch v-model="scope.row.support" active-color="#13ce66" inactive-color="#ff4949" @change="handleSupportChange(scope.row)"/>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -132,12 +131,12 @@
         <el-form-item label="分类描述" prop="description">
           <el-input v-model="form.description" placeholder="请输入分类描述"/>
         </el-form-item>
-        <el-form-item label="推荐" prop="support">
+        <el-form-item v-show="false" label="推荐" prop="support">
           <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="add">确 定</el-button>
+        <el-button type="primary" @click="addOrEdit">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -145,11 +144,13 @@
 </template>
 
 <script>
-  import {
-    getCategory,
-    addCategory,
-    changeCategorySupport,
-  } from "@/api/blog/category";
+import {
+  getCategory,
+  addCategory,
+  changeCategorySupport,
+  updateCategory,
+} from "@/api/blog/category";
+
   import initData from '@/mixins/initData'
 
   export default {
@@ -206,16 +207,27 @@
           row.support = !row.support;
         });
       },
-      async add() {
+      async addOrEdit() {
         await this.$refs["form"].validate(valid => {
           if (valid) {
-            addCategory(this.form).then(resp => {
-              this.msgSuccess("添加成功～")
-              this.open = false;
-              this.init();
-            }).catch(err => {
-              //
-            })
+            if (this.form.id === undefined) {
+              addCategory(this.form).then(resp => {
+                this.msgSuccess("添加成功～")
+                this.open = false;
+                this.init();
+              }).catch(err => {
+                //
+              })
+            }else {
+              updateCategory(this.form).then(resp => {
+                this.msgSuccess("修改成功～")
+                this.open = false;
+                this.init();
+              }).catch(err => {
+                //
+              })
+            }
+
           }
         });
 

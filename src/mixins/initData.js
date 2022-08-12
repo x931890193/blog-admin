@@ -51,6 +51,7 @@ export default {
       if (!await this.beforeInit()) {
         return
       }
+      // 所有列表
       return new Promise((resolve, reject) => {
         this.loading = true
         list(this.base, this.addDateRange(this.queryParams, this.dateRange)).then(response => {

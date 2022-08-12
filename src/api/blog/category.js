@@ -5,7 +5,6 @@ import { Message as Message } from 'element-ui'
 
 // 查询分类列表
 export function listCategory(query) {
-
   return request({
     url: '/article/category/list',
     method: 'get',
@@ -52,12 +51,31 @@ export async function addCategory(form) {
 }
 
 // 修改分类配置
-export function updateCategory(data) {
-  return request({
+export async function updateCategory(form) {
+  const AdminEditCategoryRequest = protoRoot.lookupType('AdminEditCategoryRequest')
+  const AdminEditCategoryRequestMessage = AdminEditCategoryRequest.encode(
+    AdminEditCategoryRequest.create({
+      id: form.id,
+      title: form.title,
+      description: form.description
+    })
+  ).finish()
+  const blob = new Blob([AdminEditCategoryRequestMessage], { type: 'buffer' })
+  const buf = await request({
     url: '/article/category/edit',
-    method: 'put',
-    data: data
+    method: 'post',
+    data: blob
   })
+  const res = protoRoot.lookupType('AdminEditCategoryResp').decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 // 删除分类配置
