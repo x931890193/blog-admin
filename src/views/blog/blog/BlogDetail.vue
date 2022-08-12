@@ -117,7 +117,6 @@
   import {uploadImgToQiNiu} from "@/api/common"
   import {list} from "@/api/initDataApi";
   import LocalStorageWithTime from "../../../utils/MyLocalStorage";
-  import Router from "vue-router";
 
   export default {
     name: 'BlogDetail',
