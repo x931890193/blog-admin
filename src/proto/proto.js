@@ -10,6 +10,18 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
 .addJSON({
   proto: {
     nested: {
+      BaseResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          }
+        }
+      },
       LoginAdminRequest: {
         fields: {
           username: {
@@ -51,18 +63,6 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           token: {
             type: "string",
             id: 1
-          }
-        }
-      },
-      LogoutAdminResp: {
-        fields: {
-          code: {
-            type: "uint32",
-            id: 1
-          },
-          msg: {
-            type: "string",
-            id: 2
           }
         }
       },
@@ -688,18 +688,6 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           }
         }
       },
-      AdminCategoryAddResp: {
-        fields: {
-          code: {
-            type: "uint32",
-            id: 1
-          },
-          msg: {
-            type: "string",
-            id: 2
-          }
-        }
-      },
       AdminCategoryListResp: {
         fields: {
           code: {
@@ -826,18 +814,6 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           content: {
             type: "string",
             id: 10
-          }
-        }
-      },
-      AdminArticleAddResp: {
-        fields: {
-          code: {
-            type: "uint32",
-            id: 1
-          },
-          msg: {
-            type: "string",
-            id: 2
           }
         }
       },
@@ -1079,7 +1055,71 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           }
         }
       },
-      AdminEditCategoryResp: {
+      LinkBase: {
+        fields: {
+          title: {
+            type: "string",
+            id: 1
+          },
+          description: {
+            type: "string",
+            id: 2
+          },
+          email: {
+            type: "string",
+            id: 3
+          },
+          url: {
+            type: "string",
+            id: 4
+          },
+          headerImg: {
+            type: "string",
+            id: 5
+          },
+          display: {
+            type: "bool",
+            id: 6
+          },
+          id: {
+            type: "uint32",
+            id: 7
+          },
+          createTime: {
+            type: "string",
+            id: 8
+          }
+        }
+      },
+      LinkRequest: {
+        fields: {
+          title: {
+            type: "string",
+            id: 3
+          },
+          description: {
+            type: "string",
+            id: 4
+          },
+          email: {
+            type: "string",
+            id: 5
+          },
+          url: {
+            type: "string",
+            id: 6
+          },
+          headerImg: {
+            type: "string",
+            id: 7
+          },
+          display: {
+            type: "string",
+            id: 8
+          }
+        }
+      },
+      LinkListResp: {
         fields: {
           code: {
             type: "uint32",
@@ -1088,6 +1128,15 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           msg: {
             type: "string",
             id: 2
+          },
+          total: {
+            type: "uint32",
+            id: 3
+          },
+          rows: {
+            rule: "repeated",
+            type: "LinkBase",
+            id: 4
           }
         }
       }

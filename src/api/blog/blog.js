@@ -54,8 +54,8 @@ export async function addBlog(form) {
     method: 'post',
     data: blob
   })
-  const AdminArticleAddResp = protoRoot.lookupType('AdminArticleAddResp')
-  const res = AdminArticleAddResp.decode(buf)
+  const BaseResp = protoRoot.lookupType('BaseResp')
+  const res = BaseResp.decode(buf)
   if (res.code) {
     Message({
       message: res.msg,
@@ -90,7 +90,7 @@ export async function updateBlog(form) {
     method: 'post',
     data: blob
   })
-  const AdminArticleAddResp = protoRoot.lookupType('AdminArticleAddResp')
+  const AdminArticleAddResp = protoRoot.lookupType('BaseResp')
   const res = AdminArticleAddResp.decode(buf)
   if (res.code) {
     Message({

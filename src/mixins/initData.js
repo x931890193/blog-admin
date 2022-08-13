@@ -127,23 +127,19 @@ export default {
         if (valid) {
           if (this.form.id !== undefined) {
             update(this.base, obj).then(response => {
-              if (response.code === 200) {
-                this.msgSuccess('修改成功')
+                this.msgSuccess('修改' + this.modalName + '成功')
                 this.open = false
                 this.init()
-              } else {
-                this.msgError(response.msg)
-              }
+            }).catch((err)=> {
+              this.msgError(err)
             })
           } else {
             add(this.base, obj).then(response => {
-              if (response.code === 200) {
-                this.msgSuccess('新增成功')
+                this.msgSuccess('新增'+ this.modalName +'成功')
                 this.open = false
                 this.init()
-              } else {
-                this.msgError(response.msg)
-              }
+            }).catch((err) => {
+              this.msgError(err)
             })
           }
         }
@@ -165,13 +161,11 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      const data = row || this.row
-      this.form = data
+      this.form = row || this.row
       this.open = true
       this.title = '修改' + this.modelName
     },
-    handleExport() {
-    },
+    handleExport() {},
     /** 删除按钮操作 */
     handleDelete() {
       this.delLoading = true

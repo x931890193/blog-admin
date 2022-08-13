@@ -43,15 +43,6 @@ export function delLink(id) {
   })
 }
 
-// 修改友链推荐
-export function changeLinkDisplay(id, display) {
-  let data = {
-    id: id,
-    display: display
-  };
-  updateLink(data);
-}
-
 // 通过或者拒绝友链申请
 export function changeLinkStatus(id, pass) {
 

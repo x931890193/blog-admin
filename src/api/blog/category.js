@@ -20,64 +20,6 @@ export function getCategory(id) {
   })
 }
 
-// 新增分类配置
-export async function addCategory(form) {
-  const AdminCategoryAddRequest = protoRoot.lookupType('AdminCategoryAddRequest')
-  const AdminCategoryAddRequestMessage = AdminCategoryAddRequest.encode(
-    AdminCategoryAddRequest.create({
-      title: form.title,
-      description: form.description,
-      support: form.support,
-    })
-  ).finish()
-  const blob = new Blob([AdminCategoryAddRequestMessage], { type: 'buffer' })
-  const buf = await request({
-    url: '/article/category/add',
-    method: 'post',
-    data: blob
-  })
-
-  const AdminCategoryAddResp = protoRoot.lookupType('AdminCategoryAddResp')
-  const res = AdminCategoryAddResp.decode(buf)
-  if (res.code) {
-    Message({
-      message: res.msg,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(new Error(res.msg || 'Error'))
-  }
-  return res
-}
-
-// 修改分类配置
-export async function updateCategory(form) {
-  const AdminEditCategoryRequest = protoRoot.lookupType('AdminEditCategoryRequest')
-  const AdminEditCategoryRequestMessage = AdminEditCategoryRequest.encode(
-    AdminEditCategoryRequest.create({
-      id: form.id,
-      title: form.title,
-      description: form.description
-    })
-  ).finish()
-  const blob = new Blob([AdminEditCategoryRequestMessage], { type: 'buffer' })
-  const buf = await request({
-    url: '/article/category/edit',
-    method: 'post',
-    data: blob
-  })
-  const res = protoRoot.lookupType('AdminEditCategoryResp').decode(buf)
-  if (res.code) {
-    Message({
-      message: res.msg,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(new Error(res.msg || 'Error'))
-  }
-  return res
-}
-
 // 删除分类配置
 export function delCategory(id) {
   return request({

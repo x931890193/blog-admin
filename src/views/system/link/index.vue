@@ -2,16 +2,13 @@
   <div class="app-container">
     <el-form :inline="true" label-width="68px">
       <el-form-item label="友链名称">
-        <el-input v-model="queryParams.title" placeholder="请输入友链名称" clearable size="small" style="width: 240px"
-                  @keyup.enter.native="handleQuery"/>
+        <el-input v-model="queryParams.title" placeholder="请输入友链名称" clearable size="small" style="width: 240px"  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="友链描述">
-        <el-input v-model="queryParams.description" placeholder="请输入友链描述" clearable size="small" style="width: 240px"
-                  @keyup.enter.native="handleQuery"/>
+        <el-input v-model="queryParams.description" placeholder="请输入友链描述" clearable size="small" style="width: 240px"  @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间">
-        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -21,23 +18,19 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini"
-                   @click="handleAdd">新增
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single"
-                   @click="handleUpdate(null)">修改
+        <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate(null)">修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple"
-                   @click="handleDelete">删除
+        <el-button type="danger" icon="el-icon-delete" size="mini" :loading="delLoading" :disabled="multiple" @click="handleDelete">删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" icon="el-icon-download" size="mini"
-                   @click="handleExport">导出
+        <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport">导出
         </el-button>
       </el-col>
     </el-row>
@@ -52,7 +45,6 @@
                      inactive-color="#ff4949"/>
         </template>
       </el-table-column>
-      <el-table-column label="权重" prop="weight" :show-overflow-tooltip="true"/>
       <el-table-column label="站长邮箱" prop="email" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -62,8 +54,7 @@
       <el-table-column label="操作" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <div v-if="scope.row.status">
-            <el-button size="mini" type="text"
-                       @click="handleUpdate(scope.row)">修改
+            <el-button size="mini" type="text"  @click="handleUpdate(scope.row)">修改
             </el-button>
             <el-popover :ref="scope.row.id" placement="top" width="180">
               <p>确定删除本条数据吗？</p>
@@ -78,19 +69,16 @@
             </el-popover>
           </div>
           <div v-else>
-            <el-button size="mini" type="text" icon="el-icon-check"
-                       @click="handleStatus(scope.row,true)">通过
+            <el-button size="mini" type="text" icon="el-icon-check" @click="handleStatus(scope.row,true)">通过
             </el-button>
-            <el-button size="mini" type="text" icon="el-icon-close"
-                       @click="handleStatus(scope.row,false)">拒绝
+            <el-button size="mini" type="text" icon="el-icon-close" @click="handleStatus(scope.row,false)">拒绝
             </el-button>
           </div>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-                @pagination="init"/>
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="init"/>
 
     <!-- 添加或修改分类对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px">
@@ -108,11 +96,6 @@
           <el-col :span="8">
             <el-form-item label="显示" prop="display">
               <el-switch v-model="form.display" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :span="16">
-            <el-form-item label="权重" prop="weight">
-              <el-input v-model.number="form.weight" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -188,7 +171,7 @@
     },
     methods: {
       beforeInit() {
-        this.base = '/system/link';
+        this.base = '/link';
         this.modelName = '友链';
         return true
       },
@@ -208,7 +191,7 @@
           }
           this.getList();
         }).catch(function () {
-          row.status = row.status === false ? true : false;
+          row.status = row.status === false;
         });
       },
       handleDisplayChange(row) {
@@ -220,15 +203,15 @@
         }).then(function () {
           return changeLinkDisplay(row.id, row.display);
         }).then((response) => {
-          if (response.code == 200) {
+          if (response.code === 200) {
             this.msgSuccess(text + "成功");
           } else {
             this.msgError(text + "失败");
           }
         }).catch(function () {
-          row.display = row.display === false ? true : false;
+          row.display = row.display === false;
         });
-      }
+      },
     }
   };
 </script>

@@ -89,7 +89,7 @@
         </el-row>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <mavonEditor v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" style="min-height: 500px;"/>
+          <mavonEditor v-model="form.content" ref="editor" @imgAdd="handleEditorImgAdd" style="min-height: 500px; z-index: auto"/>
         </el-form-item>
       </div>
     </el-form>

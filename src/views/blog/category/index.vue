@@ -136,7 +136,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addOrEdit">确 定</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -207,31 +207,6 @@ import {
           row.support = !row.support;
         });
       },
-      async addOrEdit() {
-        await this.$refs["form"].validate(valid => {
-          if (valid) {
-            if (this.form.id === undefined) {
-              addCategory(this.form).then(resp => {
-                this.msgSuccess("添加成功～")
-                this.open = false;
-                this.init();
-              }).catch(err => {
-                //
-              })
-            }else {
-              updateCategory(this.form).then(resp => {
-                this.msgSuccess("修改成功～")
-                this.open = false;
-                this.init();
-              }).catch(err => {
-                //
-              })
-            }
-
-          }
-        });
-
-      }
     }
   };
 </script>
