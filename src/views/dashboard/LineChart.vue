@@ -157,9 +157,9 @@
           this.dataType = "visitor"
         }
         listLineChartData(this.dataType).then(response => {
-          this.echartOptions.xAxis.data = response.data.axisData;
-          this.echartOptions.series[0].data = response.data.expectedData;
-          this.echartOptions.series[1].data = response.data.actualData;
+          this.echartOptions.xAxis.data = response.axisData;
+          this.echartOptions.series[0].data = response.expectedData;
+          this.echartOptions.series[1].data = response.actualData;
         });
       },
       initChart() {

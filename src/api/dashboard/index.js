@@ -1,18 +1,42 @@
 import request from '@/utils/request'
+import protoRoot from "@/proto/proto";
+import { Message as Message } from 'element-ui'
 
-export function listPanelGroup() {
-  return request({
+export async function listPanelGroup() {
+  const buf = await request({
     url: '/dashboard/panelGroup',
-    method: 'get',
+    method: 'get'
   })
+  const listPanelGroupResp = protoRoot.lookupType('PanelGroupResp')
+  const res = listPanelGroupResp.decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 //获取折线图数据
-export function listLineChartData(type) {
-  return request({
+export async function listLineChartData(type) {
+  const buf = await request({
     url: '/dashboard/lineChartData/' + type,
-    method: 'get',
+    method: 'get'
   })
+  const LineChartDataResp = protoRoot.lookupType('LineChartDataResp')
+  const res = LineChartDataResp.decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 //获取访问来源数据

@@ -299,9 +299,12 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             id: 4
           },
           descriptions: {
-            rule: "repeated",
             type: "string",
             id: 5
+          },
+          id: {
+            type: "uint32",
+            id: 6
           }
         }
       },
@@ -326,6 +329,14 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           beian: {
             type: "string",
             id: 5
+          },
+          descriptions: {
+            type: "string",
+            id: 6
+          },
+          id: {
+            type: "uint32",
+            id: 7
           }
         }
       },
@@ -1137,6 +1148,189 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             rule: "repeated",
             type: "LinkBase",
             id: 4
+          }
+        }
+      },
+      UserInfoResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          },
+          userId: {
+            type: "uint32",
+            id: 3
+          },
+          username: {
+            type: "string",
+            id: 4
+          },
+          status: {
+            type: "uint32",
+            id: 5
+          },
+          avatar: {
+            type: "string",
+            id: 6
+          },
+          linkname: {
+            type: "string",
+            id: 7
+          },
+          linkUrl: {
+            type: "string",
+            id: 8
+          },
+          linkDesc: {
+            type: "string",
+            id: 9
+          },
+          logoUrl: {
+            type: "string",
+            id: 10
+          },
+          state: {
+            type: "bool",
+            id: 11
+          },
+          label: {
+            type: "uint32",
+            id: 12
+          },
+          receiveUpdate: {
+            type: "bool",
+            id: 13
+          },
+          token: {
+            type: "string",
+            id: 14
+          },
+          verifyStatus: {
+            type: "string",
+            id: 15
+          }
+        }
+      },
+      UploadFileResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          },
+          url: {
+            type: "string",
+            id: 3
+          }
+        }
+      },
+      EditUserInfoRequest: {
+        fields: {
+          userId: {
+            type: "uint32",
+            id: 1
+          },
+          label: {
+            type: "uint32",
+            id: 2
+          },
+          state: {
+            type: "bool",
+            id: 3
+          },
+          linkUrl: {
+            type: "string",
+            id: 4
+          },
+          linkname: {
+            type: "string",
+            id: 5
+          },
+          linkDesc: {
+            type: "string",
+            id: 6
+          },
+          receiveUpdate: {
+            type: "bool",
+            id: 7
+          },
+          logoUrl: {
+            type: "string",
+            id: 8
+          }
+        }
+      },
+      UpdateAboutRequest: {
+        fields: {
+          content: {
+            type: "string",
+            id: 1
+          },
+          htmlContent: {
+            type: "string",
+            id: 2
+          },
+          id: {
+            type: "uint32",
+            id: 3
+          }
+        }
+      },
+      PanelGroupResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          },
+          blogCount: {
+            type: "uint32",
+            id: 3
+          },
+          visitorCount: {
+            type: "uint32",
+            id: 4
+          },
+          userCount: {
+            type: "uint32",
+            id: 5
+          }
+        }
+      },
+      LineChartDataResp: {
+        fields: {
+          code: {
+            type: "uint32",
+            id: 1
+          },
+          msg: {
+            type: "string",
+            id: 2
+          },
+          axisData: {
+            rule: "repeated",
+            type: "uint32",
+            id: 3
+          },
+          expectedData: {
+            rule: "repeated",
+            type: "uint32",
+            id: 4
+          },
+          actualData: {
+            rule: "repeated",
+            type: "uint32",
+            id: 5
           }
         }
       }

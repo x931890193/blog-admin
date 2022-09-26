@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="setting">
     <el-form-item prop="content" style="margin-bottom: 30px;">
-      <mavonEditor v-model="setting.content" ref="editor" @imgAdd="handleEditorImgAdd" style="height: 500px; "/>
+      <mavonEditor v-model="setting.content" ref="editor" @imgAdd="handleEditorImgAdd" style="height: 500px; z-index: auto;"/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" size="mini" @click="submit">保存</el-button>
@@ -21,9 +21,10 @@
     components: {
       mavonEditor
     },
-    created() {
+    async created() {
       getAbout().then(response => {
-        this.setting.content = response.data;
+        this.setting.content =  response.descriptions;
+        this.setting.id = response.id
       })
     },
     data() {
@@ -44,14 +45,8 @@
         this.$refs["form"].validate(valid => {
           if (valid) {
             this.setting.htmlContent = marked(this.setting.content)
-            updateAbout(JSON.parse(JSON.stringify(this.setting))).then(
-              response => {
-                if (response.code === 200) {
-                  this.msgSuccess("修改成功");
-                } else {
-                  this.msgError(response.msg);
-                }
-              }
+            console.log(JSON.parse(JSON.stringify(this.setting)))
+            updateAbout(JSON.parse(JSON.stringify(this.setting))).then(() => {this.msgSuccess("修改成功");}
             );
           }
         });
