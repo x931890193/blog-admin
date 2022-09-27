@@ -4,19 +4,55 @@ import protoRoot from '@/proto/proto'
 import { Message as Message } from 'element-ui'
 
 // 修改网站设置
-export function updateSiteSetting(data) {
-  return request({
+export async function updateSiteSetting(data) {
+  console.log(data)
+  const SiteInfoReq = protoRoot.lookupType('SiteInfoReq')
+  const SiteInfoReqMessage = SiteInfoReq.encode(
+    SiteInfoReq.create({
+      beian: data.beian,
+      title: data.title,
+      descriptions: data.descriptions,
+      id: data.id,
+    })
+  ).finish()
+  const blob = new Blob([SiteInfoReqMessage], { type: 'buffer' })
+
+  const buf = await request({
     url: '/system/setting/siteSetting',
-    method: 'put',
-    data: data
+    method: 'post',
+    data: blob
   })
+  const BaseResp = protoRoot.lookupType('BaseResp')
+  const res = BaseResp.decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
+
 }
 
-export function getSiteSetting() {
-  return request({
+// get网站设置
+export async function getSiteSetting() {
+  const buf = await request({
     url: '/system/setting/siteSetting',
     method: 'get',
   })
+  const resp = protoRoot.lookupType('SiteInfoResp')
+  const res = resp.decode(buf)
+  if (res.code) {
+    Message({
+      message: res.msg,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(res.msg || 'Error'))
+  }
+  return res
 }
 
 //修改Email配置

@@ -23,13 +23,14 @@
     },
     async created() {
       getAbout().then(response => {
-        this.setting.content =  response.descriptions;
+        this.setting.content =  response.selfDescriptions;
         this.setting.id = response.id
       })
     },
     data() {
       return {
         setting: {
+          id: 0,
           content: ""
         },
         // 表单校验

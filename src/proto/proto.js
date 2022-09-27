@@ -308,6 +308,30 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
           }
         }
       },
+      SiteInfoReq: {
+        fields: {
+          copyright: {
+            type: "string",
+            id: 1
+          },
+          descriptions: {
+            type: "string",
+            id: 4
+          },
+          beian: {
+            type: "string",
+            id: 5
+          },
+          title: {
+            type: "string",
+            id: 6
+          },
+          id: {
+            type: "uint32",
+            id: 7
+          }
+        }
+      },
       SiteInfoResp: {
         fields: {
           code: {
@@ -334,9 +358,17 @@ var $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $pr
             type: "string",
             id: 6
           },
+          selfDescriptions: {
+            type: "string",
+            id: 7
+          },
           id: {
             type: "uint32",
-            id: 7
+            id: 8
+          },
+          title: {
+            type: "string",
+            id: 9
           }
         }
       },
