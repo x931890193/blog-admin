@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {getToken} from '@/api/qiniu'
+  import {getToken} from '@/api/tool/qiNiu'
 
   export default {
     name: 'SingleImageUpload',
