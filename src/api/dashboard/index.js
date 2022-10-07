@@ -40,52 +40,52 @@ export async function listLineChartData(type) {
 }
 
 //获取访问来源数据
-export function listAccessData() {
-  return request({
+export async function listAccessData() {
+  const buf = await request({
     url: '/dashboard/access',
     method: 'get',
   })
 }
 
 //获取爬虫访问数据
-export function listSpiderData() {
-  return request({
+export async  function listSpiderData() {
+  const buf = await request({
     url: '/dashboard/spiderData',
     method: 'get',
   })
 }
 
 //获取访问日志
-export function listVisitLog(params) {
-  return request({
-    url: '/dashboard/visitLog',
+export async function listVisitLog(params) {
+  const buf = await request({
+    url: '/dashboard/log/visitLog',
     method: 'get',
     params: params
   })
 }
 
 //获取操作日志
-export function listOperateLog(params) {
-  return request({
-    url: '/dashboard/operateLog',
+export async function listOperateLog(params) {
+  const buf = await request({
+    url: '/dashboard/log/operateLog',
     method: 'get',
     params: params
   })
 }
 
 //获取任务日志
-export function listTaskLog(params) {
-  return request({
-    url: '/dashboard/taskLog',
+export async function listTaskLog(params) {
+  const buf = await request({
+    url: '/dashboard/log/taskLog',
     method: 'get',
     params: params
   })
 }
 
 //获取登录日志
-export function listLoginLog(params) {
-  return request({
-    url: '/dashboard/loginLog',
+export async function listLoginLog(params) {
+  const buf = await request({
+    url: '/dashboard/log/loginLog',
     method: 'get',
     params: params
   })

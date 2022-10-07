@@ -97,19 +97,19 @@
     },
     methods: {
       tabChange(target) {
-        if (target.paneName == 'visitLogTab') {
+        if (target.paneName === 'visitLogTab') {
           if (!this.visitLog.handle) {
             this.getVisitLog();
           }
-        } else if (target.paneName == 'loginLogTab') {
+        } else if (target.paneName === 'loginLogTab') {
           if (!this.loginLog.handle) {
             this.getLoginLog();
           }
-        } else if (target.paneName == 'operateLogTab') {
+        } else if (target.paneName === 'operateLogTab') {
           if (!this.operateLog.handle) {
             this.getOperateLog();
           }
-        } else if (target.paneName == 'taskLogTab') {
+        } else if (target.paneName === 'taskLogTab') {
           if (!this.taskLog.handle) {
             this.getTaskLog();
           }
@@ -125,7 +125,7 @@
           listVisitLog(this.visitLog.queryParams).then(response => {
             this.visitLog.handle = true;
             this.visitLog.data.push(...response.rows);
-            if (response.total == this.visitLog.data.length) {
+            if (response.total === this.visitLog.data.length) {
               this.visitLog.noMore = true;
             }
             this.visitLog.loading = false;
